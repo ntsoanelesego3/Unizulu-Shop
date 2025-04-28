@@ -1,0 +1,24 @@
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home_page.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>UniShop</title>
+{% endblock %}
+
+{% block content %}
+<p id="myh1"> hello I'm home page</p>
+<a href="{% url 'online_app:items' %}">items</a>
+<br></br>
+<a href="{% url 'online_app:login' %}">login</a>
+{% endblock %}
+    
+
+
+
+
+
+
+

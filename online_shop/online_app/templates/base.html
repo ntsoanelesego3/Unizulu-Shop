@@ -1,0 +1,97 @@
+{% load static %} {# Load the static tag library to link CSS/JS #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {# --- Block for the Page Title --- #}
+    {# Child templates will replace the content inside this block #}
+    {% block title %}
+        <title>My Online Shop</title> {# Default title if child doesn't provide one #}
+    {% endblock %}
+
+    {# --- Link to a general CSS file --- #}
+    {# Create a 'css' folder inside your 'static' folder for this #}
+    <link rel="stylesheet" href="{% static 'css/base_style.css' %}"> 
+
+    {# --- Block for Extra Page-Specific CSS --- #}
+    {# Child templates can add their own CSS links here #}
+    {% block extra_css %}
+    {% endblock %}
+</head>
+<body>
+
+    {# --- Basic Navigation Bar --- #}
+    <nav>
+        <ul>
+            <li><a href="{% url 'online_app:home_page' %}">Home</a></li>
+            <li><a href="{% url 'online_app:items' %}">View Items</a></li>
+            
+            {# Show different links depending on whether the user is logged in #}
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'online_app:upload_item' %}">Upload Item</a></li> {# Assuming you create this URL later #}
+                <li><span>Hi, {{ user.username }}!</span></li>
+                <li>
+                    {# Use a form for logout for security (POST request) #}
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="link-button">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'online_app:signup' %}">Sign Up</a></li> {# Assuming you create this URL later #}
+            {% endif %}
+        </ul>
+    </nav>
+
+    <hr> {# A simple separator #}
+
+    {# --- Main Content Area --- #}
+    {# This is where the main content of each specific page will go #}
+    <main>
+        {% block content %}
+            {# Content from child templates like items.html or up_items.html goes here #}
+            <p>Welcome to the base template!</p> {# Default content if child doesn't provide any #}
+        {% endblock %}
+    </main>
+
+    <hr> {# A simple separator #}
+
+    {# --- Basic Footer --- #}
+    <footer>
+        <p>&copy; {% now "Y" %} My Online Shop. All rights reserved.</p>
+    </footer>
+
+    {# --- Block for Page-Specific JavaScript --- #}
+    {# Child templates can add their JS links or scripts here #}
+    {% block extra_js %}
+    {% endblock %}
+
+    {# You might add general JavaScript files here later, e.g.: #}
+    {# <script src="{% static 'js/main.js' %}"></script> #}
+
+</body>
+</html>
+
+{# Simple CSS for the link-button class if you don't have base_style.css yet #}
+<style>
+    .link-button {
+        background: none;
+        border: none;
+        color: blue; /* Or your link color */
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 0;
+        font: inherit;
+    }
+    nav ul {
+        list-style: none;
+        padding: 0;
+    }
+    nav ul li {
+        display: inline;
+        margin-right: 10px;
+    }
+</style>

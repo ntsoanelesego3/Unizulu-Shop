@@ -1,0 +1,27 @@
+ {# Assuming you have a base template, otherwise remove this line #}
+{% load static %}
+
+{% block title %}
+    <title>Upload New Item</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <h1>Upload Your Item for Sale</h1>
+
+      {# 1. method="post" - because we are sending data to the server.#}
+      {# 2. enctype="multipart/form-data" - VERY IMPORTANT! This is needed to handle file uploads (the image).#}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {# This renders the form fields defined in ItemForm (name, description, price, image) #}
+        {{ form.as_p }} 
+        
+        <button type="submit">Upload Item</button>
+    </form>
+
+    <br>
+    <a href="{% url 'online_app:items' %}">Back to Items List</a>
+{% endblock %}
+

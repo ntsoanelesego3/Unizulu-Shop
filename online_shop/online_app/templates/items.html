@@ -1,0 +1,33 @@
+{% load static %}
+
+<html lang="en">
+{% block head %}
+{% endblock %}
+
+{% block title %}
+    <title>items</title>
+    <link rel="stylesheet" href="{% static 'css/items.css' %}">
+{% endblock %}
+
+{% block body %}
+{% csrf_token %}
+<h1>Look at all the cool items!</h1>
+{% for item in items %}  <!-- We need to pass 'items' from the view -->
+    <div>
+        <h2>{{ item.name }}</h2>
+        {% if item.image %}
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="100">
+        {% endif %}
+        <p>{{ item.description }}</p>
+        <p>Price: ${{ item.price }}</p>
+        <p>Sold by: {{ item.seller.username }}</p>
+        <p>up loaded: {{ item.created_at.username}}</p>
+        <!-- Link to see details and comments later -->
+    </div>
+    <hr>
+{% empty %}
+    <p>No items listed yet!</p>
+{% endfor %}
+<a href="{% url 'online_app:home_page' %}">Back to Home</a>
+
+{% endblock %}
