@@ -1,9 +1,9 @@
-# online_app/views.py
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item, Comment
 from .forms import ItemForm, CommentForm
 from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required # to only allow login user to add items
+from django.contrib.auth.decorators import login_required 
 
 # home page to welcome users
 def home_page_views(request):
